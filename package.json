@@ -1,0 +1,15 @@
+{
+  "name": "breakpointjs",
+  "version": "1.0.0",
+  "description": "",
+  "main": "breakpoint.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Christian Klihm",
+  "license": "MIT",
+  "devDependencies": {
+    "qunit": "^2.9.2",
+    "uglify-es": "^3.3.9"
+  }
+}

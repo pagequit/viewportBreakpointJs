@@ -1,8 +1,8 @@
 {
-  "name": "breakpointjs",
+  "name": "viewport-breakpoint",
   "version": "1.0.0",
   "description": "",
-  "main": "breakpoint.js",
+  "main": "viewportBreakpoint.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },

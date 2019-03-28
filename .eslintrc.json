@@ -1,8 +1,35 @@
 {
-  "rules": {},
   "env": {
-    "es6": true,
-    "browser": true
+    "browser": true,
+    "es6": true
   },
-  "extends": "eslint:recommended"
+  "extends": "eslint:recommended",
+  "globals": {
+    "QUnit": true
+  },
+  "rules": {
+      "no-console": "warn",
+      "no-eval": "error",
+      "no-implied-eval": "error",
+      "indent": [
+        "error",
+        "tab"
+      ],
+      "linebreak-style": [
+        "error",
+        "unix"
+      ],
+      "comma-style": [
+        "error",
+        "last"
+      ],
+      "semi": [
+        "error",
+        "always"
+      ],
+      "quotes": [
+        "warn",
+        "single"
+    ]
+  }
 }

@@ -6,10 +6,16 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/pagequit/viewportBreakpointJs"
+  },
   "author": "Christian Klihm",
   "license": "MIT",
   "devDependencies": {
+    "eslint": "^5.15.3",
     "qunit": "^2.9.2",
     "uglify-es": "^3.3.9"
-  }
+  },
+  "dependencies": {}
 }

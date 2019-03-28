@@ -28,7 +28,7 @@
 			up: [],
 			down: [],
 		};
-	}
+	};
 
 	/**
 	 * Defines a magic getter which returns the current breakpoint.
@@ -44,14 +44,14 @@
 	 */
 	viewport.Breakpoint.prototype.toString = function() {
 		return this.key;
-	}
+	};
 
 	/**
 	 * @returns {boolean}
 	 */
 	viewport.Breakpoint.prototype.isActive = function() {
 		return this.width <= window.innerWidth;
-	}
+	};
 
 	/**
 	 * @static
@@ -61,7 +61,7 @@
 		breakpoints.forEach(breakpoint => {
 			callback(breakpoint);
 		});
-	}
+	};
 
 	/**
 	 * @static
@@ -92,7 +92,7 @@
 
 			return 0;
 		});
-	}
+	};
 
 	/**
 	 * @static
@@ -107,7 +107,7 @@
 		const breakpoint = breakpoints.find(breakpoint => breakpoint.key === key);
 		const index = breakpoints.indexOf(breakpoint);
 		breakpoints.splice(index, 1);
-	}
+	};
 
 	/**
 	 * @param {function} callback
@@ -120,28 +120,28 @@
 		else {
 			throw `error: '${callback}' is not function`;
 		}
-	}
+	};
 
 	/**
 	 * @param {string} name
 	 */
 	viewport.removeBreakpointObserver = function(name) {
 		delete breakpointObserver[name];
-	}
+	};
 
 	/**
 	 * @param {object} updateData
 	 * @example
 	 * {
-	 * 		current: viewport.Breakpoint {key: "xs", width: 1, callbacks: {…}}
-	 * 		passed: viewport.Breakpoint {key: "sm", width: 576, callbacks: {…}}
+	 * 	current: { key: "xs", width: 1, callbacks: {…} }
+	 * 	passed: { key: "sm", width: 576, callbacks: {…} }
 	 * }
 	 */
 	viewport.notifyBreakpointObserver = function(updateData) {
 		for ( const callback in breakpointObserver ) {
 			breakpointObserver[callback](updateData);
 		}
-	}
+	};
 
 	/**
 	 * @param {string} breakpointKey
@@ -154,7 +154,7 @@
 		else {
 			throw `error: '${callback}' is not function`;
 		}
-	}
+	};
 
 	/**
 	 * @param {string} breakpointKey
@@ -167,7 +167,7 @@
 		else {
 			throw `error: '${callback}' is not function`;
 		}
-	}
+	};
 
 
 	viewport.init = function() {
@@ -203,6 +203,6 @@
 			passed: breakpointReference,
 			current: viewport.Breakpoint.current,
 		});
-	}
+	};
 
 })( window.viewport = window.viewport || {} );

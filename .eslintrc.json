@@ -5,7 +5,8 @@
   },
   "extends": "eslint:recommended",
   "globals": {
-    "QUnit": true
+    "QUnit": true,
+    "viewport": true
   },
   "rules": {
       "no-console": "warn",

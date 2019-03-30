@@ -21,14 +21,14 @@
 				document.getElementById('breakpoint').textContent = data.current.key;
 			}, 'test');
 
+			// Get things running...
+			viewport.init();
+
 			// Add an example callback which is invoked if the current breakpoint is >= 'md'
 			viewport.up('md', (data) =>	console.log('up md', data));
 
 			// Add an example callback which is invoked if the current breakpoint is < 'md'
 			viewport.down('md', (data) =>	console.log('down md', data));
-
-			// Get things running...
-			viewport.init();
 
 		});
 

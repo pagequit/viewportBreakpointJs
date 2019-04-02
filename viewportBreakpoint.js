@@ -16,6 +16,27 @@
 	/** @var {object} */
 	const breakpoints = [];
 
+	/** @var {Breakpoint} */
+	let breakpointReference;
+
+	/**
+	 * @param {object} updateData
+	 */
+	function dispatchBreakpointCallbacks(updateData) {
+		breakpoints.forEach(breakpoint => {
+			if ( breakpoint.isActive() && breakpoint.callbacks.up.length > 0 ) {
+				breakpoint.callbacks.up.forEach(callback => {
+					callback(updateData);
+				});
+			}
+			else if ( !breakpoint.isActive() && breakpoint.callbacks.down.length > 0 ) {
+				breakpoint.callbacks.down.forEach(callback => {
+					callback(updateData);
+				});
+			}
+		});
+	}
+
 	/**
 	 * @constructor
 	 * @param {string} key
@@ -148,11 +169,18 @@
 	 * @param {function} callback
 	 */
 	viewport.up = function(breakpointKey, callback) {
-		if ( typeof callback === 'function' ) {
-			this.Breakpoint[breakpointKey].callbacks.up.push(callback);
-		}
-		else {
+		if ( !(typeof callback === 'function') ) {
 			throw `error: '${callback}' is not function`;
+		}
+
+		// TODO: check typeof breakpoint
+		const breakpoint = this.Breakpoint[breakpointKey];
+		breakpoint.callbacks.up.push(callback);
+		if ( breakpoint.isActive() ) {
+			callback({
+				passed: breakpointReference,
+				current: viewport.Breakpoint.current,
+			});
 		}
 	};
 
@@ -161,17 +189,26 @@
 	 * @param {function} callback
 	 */
 	viewport.down = function(breakpointKey, callback) {
-		if ( typeof callback === 'function' ) {
-			this.Breakpoint[breakpointKey].callbacks.down.push(callback);
-		}
-		else {
+		if ( !(typeof callback === 'function') ) {
 			throw `error: '${callback}' is not function`;
+		}
+
+		// TODO: check typeof breakpoint
+		const breakpoint = this.Breakpoint[breakpointKey];
+		breakpoint.callbacks.down.push(callback);
+		if ( !(breakpoint.isActive()) ) {
+			callback({
+				passed: breakpointReference,
+				current: viewport.Breakpoint.current,
+			});
 		}
 	};
 
 
-	viewport.init = function() {
-		let breakpointReference = this.Breakpoint.current;
+	viewport.init = function(breakpoints) {
+		// TODO: check breakpoints.lenght
+		breakpoints.forEach(breakpoint => this.Breakpoint.add(breakpoint));
+		breakpointReference = this.Breakpoint.current;
 
 		window.addEventListener('resize', () => {
 			if ( breakpointReference != viewport.Breakpoint.current ) {
@@ -184,22 +221,12 @@
 			}
 		});
 
-		viewport.addBreakpointObserver((updateData) => {
-			breakpoints.forEach(breakpoint => {
-				if ( breakpoint.isActive() && breakpoint.callbacks.up.length > 0 ) {
-					breakpoint.callbacks.up.forEach(callback => {
-						callback(updateData);
-					});
-				}
-				else if ( !breakpoint.isActive() && breakpoint.callbacks.down.length > 0 ) {
-					breakpoint.callbacks.down.forEach(callback => {
-						callback(updateData);
-					});
-				}
-			});
-		}, 'dispatchBreakpointCallbacks');
+		viewport.addBreakpointObserver(
+			dispatchBreakpointCallbacks,
+			'dispatchBreakpointCallbacks'
+		);
 
-		viewport.notifyBreakpointObserver({
+		this.notifyBreakpointObserver({
 			passed: breakpointReference,
 			current: viewport.Breakpoint.current,
 		});

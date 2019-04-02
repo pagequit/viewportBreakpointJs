@@ -10,19 +10,25 @@
 		document.addEventListener('DOMContentLoaded', () => {
 
 			// Add example breakpoints
-			viewport.Breakpoint.add( new viewport.Breakpoint('xl', 1200) );
-			viewport.Breakpoint.add( new viewport.Breakpoint('lg', 992) );
-			viewport.Breakpoint.add( new viewport.Breakpoint('md', 768) );
-			viewport.Breakpoint.add( new viewport.Breakpoint('sm', 576) );
-			viewport.Breakpoint.add( new viewport.Breakpoint('xs', 1) );
+			//viewport.Breakpoint.add( new viewport.Breakpoint('xl', 1200) );
+			//viewport.Breakpoint.add( new viewport.Breakpoint('lg', 992) );
+			//viewport.Breakpoint.add( new viewport.Breakpoint('md', 768) );
+			//viewport.Breakpoint.add( new viewport.Breakpoint('sm', 576) );
+			//viewport.Breakpoint.add( new viewport.Breakpoint('xs', 1) );
 
 			// Display the current breakpoint
 			viewport.addBreakpointObserver(data => {
 				document.getElementById('breakpoint').textContent = data.current.key;
 			}, 'test');
 
-			// Get things running...
-			viewport.init();
+
+			viewport.init([
+				new viewport.Breakpoint('xl', 1200),
+				new viewport.Breakpoint('lg', 992),
+				new viewport.Breakpoint('md', 768),
+				new viewport.Breakpoint('sm', 576),
+				new viewport.Breakpoint('xs', 1),
+			]);
 
 			// Add an example callback which is invoked if the current breakpoint is >= 'md'
 			viewport.up('md', (data) =>	console.log('up md', data));

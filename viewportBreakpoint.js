@@ -182,8 +182,12 @@
 			throw `error: '${callback}' is not function`;
 		}
 
-		// TODO: check typeof breakpoint
+		if ( !(this.Breakpoint[breakpointKey] instanceof viewport.Breakpoint) ) {
+			throw `error: '${this.Breakpoint[breakpointKey]}' is not an instance of viewport.Breakpoint`;
+		}
+
 		const breakpoint = this.Breakpoint[breakpointKey];
+
 		breakpoint.callbacks.up.push(callback);
 		if ( breakpoint.isActive() ) {
 			callback({
@@ -202,8 +206,12 @@
 			throw `error: '${callback}' is not function`;
 		}
 
-		// TODO: check typeof breakpoint
+		if ( !(this.Breakpoint[breakpointKey] instanceof viewport.Breakpoint) ) {
+			throw `error: '${this.Breakpoint[breakpointKey]}' is not an instance of viewport.Breakpoint`;
+		}
+
 		const breakpoint = this.Breakpoint[breakpointKey];
+
 		breakpoint.callbacks.down.push(callback);
 		if ( !(breakpoint.isActive()) ) {
 			callback({
@@ -215,8 +223,12 @@
 
 
 	viewport.init = function(breakpoints) {
-		// TODO: check breakpoints.lenght
+		if ( breakpoints.length < 1 ) {
+			throw 'error: you have to commit a least one breakpoint for initialization';
+		}
+
 		breakpoints.forEach(breakpoint => this.Breakpoint.add(breakpoint));
+
 		breakpointReference = this.Breakpoint.current;
 
 		window.addEventListener('resize', () => {

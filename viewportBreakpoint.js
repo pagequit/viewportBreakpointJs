@@ -37,6 +37,14 @@
 		});
 	}
 
+	function invokeDefaultNotifier() {
+		viewport.notifyBreakpointObserver({
+			passed: breakpointReference,
+			current: viewport.Breakpoint.current,
+		});
+	}
+
+
 	/**
 	 * @constructor
 	 * @param {string} key
@@ -137,6 +145,7 @@
 	viewport.addBreakpointObserver = function(callback, name) {
 		if ( typeof callback === 'function' ) {
 			breakpointObserver[name] = callback;
+			invokeDefaultNotifier();
 		}
 		else {
 			throw `error: '${callback}' is not function`;
@@ -212,11 +221,7 @@
 
 		window.addEventListener('resize', () => {
 			if ( breakpointReference != viewport.Breakpoint.current ) {
-				viewport.notifyBreakpointObserver({
-					passed: breakpointReference,
-					current: viewport.Breakpoint.current,
-				});
-
+				invokeDefaultNotifier();
 				breakpointReference = viewport.Breakpoint.current;
 			}
 		});
@@ -226,10 +231,7 @@
 			'dispatchBreakpointCallbacks'
 		);
 
-		this.notifyBreakpointObserver({
-			passed: breakpointReference,
-			current: viewport.Breakpoint.current,
-		});
+		invokeDefaultNotifier();
 	};
 
 })( window.viewport = window.viewport || {} );
